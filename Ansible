@@ -66,21 +66,25 @@ state present is like install
 
 then give below command
 
-ansible-playbook -i inventory first-playbook.yml
+7) to run playbook: ansible-playbook -i inventory first-playbook.yml
 ---------------------------------
-- name: install and start nginx
+
+
+---
+- name: Install and start Nginx
   hosts: all
-  become : root
-    
-  task:
-    - name: install nginx
+  become: yes
+
+  tasks:
+    - name: Install Nginx
       apt:
         name: nginx
         state: present
-    -name: start nginx
-     service:
-       name: nginx
-       state: started
+
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
 
 
 
