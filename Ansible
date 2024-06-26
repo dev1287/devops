@@ -37,6 +37,10 @@ create an file inventory in this folder : vim inventory
 and add target ipaddress private or public
 give this command to check: ansible -i inventory all -m "shell" -a "touch devops class"
 
+in inventory file [webservers] and give ipaddress below it and [dbservers] and ipbelow it we can then to configurations for each group
+this will create ansible to only webserevers
+ansible -i inventory webservers -m "shell" -a "touch webserverfolder"
+
 this will create 2 folders in target system  devops and class
 -m is module in command
 -a is arguments
