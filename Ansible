@@ -37,9 +37,7 @@ create an file inventory in this folder : vim inventory
 and add target ipaddress private or public
 give this command to check: ansible -i inventory all -m "shell" -a "touch devops class"
 
-in inventory file [webservers] and give ipaddress below it and [dbservers] and ipbelow it we can then to configurations for each group
-this will create ansible to only webserevers
-ansible -i inventory webservers -m "shell" -a "touch webserverfolder"
+
 
 this will create 2 folders in target system  devops and class
 -m is module in command
@@ -48,6 +46,45 @@ yellow line means everything is good
 red line means error
 ----------------------------------------------
 ls -ltr & du -sh (to list file in long format and size of current directory)
+
+in inventory file [webservers] and give ipaddress below it and [dbservers] and ipbelow it we can then to configurations for each group
+this will create ansible to only webserevers
+ansible -i inventory webservers -m "shell" -a "touch webserverfolder"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+1)create first play book: vim first-playbook.yml
+
+2)inside the book first line start with 3dashes indicates that its a yaml file: ---
+3) then give -name , - means start playbook  name    means name:                -name: install and start nginx
+(if you want second play book after first task again start -name: second-playbook )
+4) then give :                                                                  hosts : all
+5) then giveroot user access:                                                   become : root
+
+6) the start task: 
+state present is like install
+
+then give below command
+
+ansible-playbook -i inventory first-playbook.yml
+---------------------------------
+- name: install and start nginx
+  hosts: all
+  become : root
+    
+  task:
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+    -name: start nginx
+     service:
+       name: nginx
+       state: started
+
+
+
+
 
 
 
