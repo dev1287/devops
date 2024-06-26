@@ -68,7 +68,7 @@ then give below command
 
 7) to run playbook: ansible-playbook -i inventory first-playbook.yml
 ---------------------------------
-
+8) to run playbook with verbose: ansible-playbook -vvv -i inventory first-playbook.yml
 
 ---
 - name: Install and start Nginx
