@@ -25,6 +25,26 @@ or
 to see files from any folder ls ~/.ssh
 2) open authorized keys: vim authorized_keys
 3) and the publickey generated in ansible server by using i and paste
+----------------------------------------------------------------
+ansible can be created not only using playbook we can also write adhoc commands like how we exceute python in cmd we can can write ansible commands directly.
+
+Inventory: inventory file contains ipaddress of systems that need to be configured, this file can be any where but by default it will be in etc/ansible/hosts
+or we can keep anywhere
+
+to co to ansible folder: cd ~/.ansible
+
+create an file inventory in this folder : vim inventory
+and add target ipaddress private or public
+give this command to check: ansible -i inventory all -m "shell" -a "touch devops class"
+
+this will create 2 folders in target system  devops and class
+-m is module in command
+-a is arguments
+yellow line means everything is good
+red line means error
+----------------------------------------------
+ls -ltr & du -sh (to list file in long format and size of current directory)
+
 
 
 
