@@ -1,0 +1,80 @@
+Steps to Install ansible in Ubuntu
+1) sudo apt update
+2) sudo apt install ansible -y
+3) ansible --version
+to configure ansible:
+4)in asible server using ubuntu user give command to generate keygen: ssh-keygen
+click enter for path is ok and password and confirmation press enter
+then to to path it has given above where it saved the file
+5)command to go to path : ls /home/ubuntu/.ssh
+6) to open public key file: cat id_ed25519.pub
+or 
+cat /home/ubuntu/.ssh/id_ed25519.pub
+
+7) copy the key the public key and pste in file
+--------------------------------
+now in goto ansible server and give private ip : ssh 172.31.20.94
+you can also give publicc ip also: ssh <public ip>
+and click yes and enter
+ you are connected to server
+
+-----------------------------
+now to go other servers which are needed to configure
+1) to go to ssh folder i.e :   cd /home/ubuntu/.ssh
+or
+to see files from any folder ls ~/.ssh
+2) open authorized keys: vim authorized_keys
+3) and the publickey generated in ansible server by using i and paste
+
+
+
+
+
+facts:
+for linux it uses ssh protocal and for windows it uses Win-Rm protocal
+what programming language yaml uses? A) YAML
+for ansible it does not matter cloud provider it needs allowed ssh from ansible to machines,public ipaddress
+
+Ansible advantages:
+1) we can write our own modules using python even others can use the modules of others using ansible galaxy.
+2)Agent less
+
+
+Ansible limitations:
+1) windows installation using ansible is hard.
+2) debugging is hard in ansible it should be improved
+3) performance can be improved during parallel execution with 10,000 servers like that
+
+-----------------------------------------------
+
+
+
+Chef uses a pull-based model. Managed nodes (called Chef clients) pull configurations from a central Chef server.
+Chef clients have an agent installed that periodically checks in with the Chef server to retrieve the latest configurations.
+How It Works:
+
+The administrator writes cookbooks and uploads them to the Chef server.
+The Chef client installed on each managed node periodically contacts the Chef server.
+The Chef client pulls the latest configurations (cookbooks) and applies them to the node.
+
+------------------------------------------------------------------
+Puppet
+Mechanism: Pull
+
+Description:
+
+puppet: master and slave
+puppet is master all other should be slaves to master for configuration
+
+
+Puppet also uses a pull-based model similar to Chef. Managed nodes (called Puppet agents) pull configurations from a central Puppet master server.
+Puppet agents have an agent software installed that periodically checks in with the Puppet master to retrieve the latest configurations.
+How It Works:
+
+The administrator writes manifests and uploads them to the Puppet master.
+The Puppet agent installed on each managed node periodically contacts the Puppet master.
+The Puppet agent pulls the latest configurations (manifests) and applies them to the node.
+Advantages:
+
+Scalability: Effective for managing a large number of nodes.
+Consistency: Ensures that nodes are regularly updated with the latest configurations from the Puppet master.
