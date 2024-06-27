@@ -94,7 +94,51 @@ Pod - A Kubernetes pod is a collection of one or more containers, and is the sma
 # Data plane (worker node)
 ## kubelet - creates pod, ensures pod is always running
 ## kube proxy - provides networking like Docker0, default load balancing
-## container runtime - runs container inside pod
+## container runtime - runs container inside pod.
+-------------------------------------------------------------------------------------------------------------------
+k8's production systems:  life cycle of k8 cluster are create,upgrade,configuration and delete
+(people do on local like minikube,k38,kind,micro8ks,k3d they dont have HA , also they don't have production issues.)
+
+popular kubernetes distribution: for any opensource there wiil be distribution for linux opensource(redhat,amazon linux are some distributions of linux who provides regular 
+updates and security patches is there are any issue we can go to oracle or linux for support).
+like that for k8's open source some distributions are EKS,Openshift,Tanzu,Rancher.
+
+order of distributions by popularity:
+1) Kubernetes
+2) Openshift
+3) Rancher
+4) VMware - Tanzu
+5) Eks, Aks, Gke,DKE
+
+
+in realtime people uses k8's for staging and pre-pod and production they uses Eks etc to reduce costs. some may use k8 in production also if they businnes is not time dependent
+(even if k8,s is down for sometime there is no problem).
+
+kops(k8's operations):  for installing k8's in real-world, the only difference between k8's and eks suppose if we install k8's in aws if we are in to anything they dont provide support 
+but eks they provide support and also they have additional wrappers like eksctl, some additional plugins and command line options and scripts but functionality is same.
+
+-----------------------------------------------------
+how we manage 100's of cluster in realtime.
+Kops is most widely used tools, we also have (Kubeadm(old, we have to do lot of manual activity, upgrades,modifying clusters is not that smooth), kubesquash).
+
+------------------------------------------------------------------------------------
+python3, aws cli are dependencies.
+kubectl: to play with k8s cluster.
+----------------------------------------------------------------
+created aws bucket from cli : aws s3api create-bucket --bucket kops-raghu-storage --region us-east-1
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
