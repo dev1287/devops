@@ -1,2 +1,79 @@
 1) Difference between Docker vs kubernetes?
 A) Docker is a container platform it makes container journer easy using docker engine or CLI. kubernetes is container orchestration platform
+
+problem1: ( All are in single host)
+containers are Ephemeral(shortlife in nature) die & revive anytime. if you have a host we have 100 containers in one the containers is taking lot of memory it may effects others and even other may not start may be lack of memory.
+there is no relation ship between container 1 and 100 but still c1 kills c100 not directly but indirectly. linux has to decide based on algorithm to delete the which process it cant randomly delete 50.
+
+problem2: (if someone killed the container) solved by Auto Healing
+some devops enginner should start manually as application is not reachable. there 100 of reasons why a container goes down. we cant see all 10000 conatiners. containers are not healing automatically.
+
+problem3: (AutoScaling)
+Suppose host has 4cpu and 4GBmemory , max c1 container can have is 4gb and 4Gb memory. suppose during festival occasion there is 1million load we have to increase the load from 1 to 10 containers or it has to be scaled automatically but docker does not do it.
+also we have to do load balancer for redirect first 10000 to c1 and next to others containers but docker cant do it.
+
+Docker does not provide any enterprise level support. we need to have these enterprise level standards (1)Load balancer (2) Firewall (3)Autoscaling (4)Auto Heal (5)API Gateway should be supported for application
+(we have to go to go to docker swarn earlier)
+
+so the docker is never used in production as its not enterprise ready , but they may use docker swarn in production 
+
+Kubernetes solves all above problems.
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) Host: by default kubernetes is a cluster(group of nodes) its a master-node architecture. suppose there is problem with container1 and it using high memory kubernetes will shift the container to another node with out effecting from other
+container1 because it has multiple nodes in the cluster.
+2) Kubnertes has replicaset (earlier called as Replica controller). we dont have to deploy new container. kubernetes is all about YAML files. in Deployment.yml file we can say increase my traffic 1 to 10. 
+also kubernetes has Horizontal Pod  Autoscaling(HPA). whenever my container has more than 70% traffic spin up the new container.
+
+3) Kubernetes has to control the damage or Fix the Damage of Container Down using Autohealing even before this problem container goes does the "API Controller" container will rollout a new container the enduser may not known that container is down 
+unless its a heavy application but general applications cant be identified.
+
+4) Kubernetes is one of the part of borg used by google which is Enterprise level. (kubernetes can whilelist and blacklist ip that are doing Ddos attacks)
+--------------------------------------------------------------------------------------------------------------------
+CNCF(community for development):
+by deafult kubernetes does not support advanced load balacing capabilities it has services and kube-proxy that has basic round-robbin, but by using custom resources and custom resource defnitions , kubebetes says to applications like  nginx you 
+create kubernetes controller using which people can use your loadbalancer even inside kubernetes this concept is called ingress controllers.
+
+-------------------------------------------------------------------------------------------------------------------------------
+in Docker simplest thing is container: we have run a container using dcoker run , if there si java applicaion it will not run without java run time, similar in docker there is a "container runtime" called dockershim this is 
+happening under the hood in docker.
+
+
+in k8's the simplest thing is pod:
+in kubernetes we create a master and workers(there will be multiple master and workers in production). in k8's we dont send request directly we send through master our request goes to Controlplane. pod is like wrapper around the container
+which has some additional capabilities. 
+
+
+Architecture of Kubernetes:
+
+Dataplane:
+when deploy a pod , pod gets deployed in a workernode in which kubelet is resposbile for maintaining the pod if anything goes wrong it will notify the master that pod is down.
+because k8 has auto-healing capabilities kublet has to inform that pod is not running do something.
+in  kubernetes inside the pod there is container and to run the container we can use Dockershim of docker or advanced like Container-d or CRI-O as a container runtime or any other container runtimes which implemets k8 runtime interface.
+
+in docker there is only dockershim but in k8s we have multiple options
+in docker there is Docker0 in k8 there is kubeproxy which provide every pod that is allocated with  ip-address,networking and default loadbalancing capabilities. as k8 has auto-scaling capabilitie kube-proxy send 50% trafiic
+to one and another 50% to another. generally kube-proxy uses ip-tables on linux machines for networking realated configuration.
+
+controlplane:
+
+
+
+
+
+
+Pod - A Kubernetes pod is a collection of one or more containers, and is the smallest unit of a Kubernetes application
+
+# Control plane (master node)
+## api server - core component of k8s, accepts all incoming  reqs, exposes k8s to external world.
+## etcd - key value store, cluster related infos.
+## scheduler - scheduling pods or resources on k8s, receives info from api server & acts on it
+## controller manager - ensures controllers like replica set are running
+## cloud controller manager - like terraform
+
+# Data plane (worker node)
+## kubelet - creates pod, ensures pod is always running
+## kube proxy - provides networking like Docker0, default load balancing
+## container runtime - runs container inside pod
+
+
+
