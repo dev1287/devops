@@ -46,15 +46,36 @@ which has some additional capabilities.
 Architecture of Kubernetes:
 
 Dataplane:
-when deploy a pod , pod gets deployed in a workernode in which kubelet is resposbile for maintaining the pod if anything goes wrong it will notify the master that pod is down.
-because k8 has auto-healing capabilities kublet has to inform that pod is not running do something.
+when deploy a pod , pod gets deployed in a workernode in which kubelet is resposbile for maintaining the pod if anything goes wrong it will notify the API_Server in master that pod is down.
+because k8 has auto-healing capabilities kublet has to inform that pod is not running do something to API-Server.
 in  kubernetes inside the pod there is container and to run the container we can use Dockershim of docker or advanced like Container-d or CRI-O as a container runtime or any other container runtimes which implemets k8 runtime interface.
 
 in docker there is only dockershim but in k8s we have multiple options
 in docker there is Docker0 in k8 there is kubeproxy which provide every pod that is allocated with  ip-address,networking and default loadbalancing capabilities. as k8 has auto-scaling capabilitie kube-proxy send 50% trafiic
 to one and another 50% to another. generally kube-proxy uses ip-tables on linux machines for networking realated configuration.
 
-controlplane:
+controlplane: the reason for existing of controlplane is to main standards ,cluster is one standard of enterprise who will decide in which node pod has to be created this is just one instruction like this
+there will be multiple instructions in k8 the core component that deals with all these when multiple people are trying to accessing k8 cluster called API Server. so the ApI is a component that basically exposes
+our k8 to the outer-world which takes requets from external world. (but all services in dataplane are not expose to outerworld users does not know there fuctinality).
+
+lets say user is trying to create a pod. he tries to access the api-server teh api-server knows that node1 is free, but to schedule the component on node1 you have component called kube scheduler.
+(api server receives the information and kube scheduler will do the action as soon it received the request from api-server)
+
+etcd: let say we are deploying production level services in k8 which it acts keyvalue store which backup and stores entire cluster information,  data is stored as object or key-value pair. what happens
+without etcd we dont have cluster related information. suppose we want to restore the information etcd is the basic component.
+
+controller manager: basically k8 supports autoscaling, to support autoscaling k8 has some components like to automatically detect it for that k8 has some controllers. for example replica-set which maintains state of 
+k8 pods. suppose if one pod is not enough i have autoscaled to 2, the component that makesure both the pods run is replica-sets. so control-manager make sure all components like replica sets will be running.
+in k8 yaml file if i say i need 2 pods replicaset controller make sure 2 pods will run.
+
+cloud-contoller-manager(ccm): (eks,aks,gke) suppose in eks user want storage this ccm identifies which cloud provider it is and deploys it. suppose a new competeter comes to cloud he has to use k8 he has to define 
+his own logics in ccm open-source github. if we use in on-premise we dont need this ccm component to be created at all in cluster.
+
+
+
+
+
+
 
 
 
