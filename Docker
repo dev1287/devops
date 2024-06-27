@@ -4,11 +4,103 @@
 2) How containers are different from Virtual machines?
 
 
-3) Difference between Entrypoint and CMD?
+
+
+3) what is docker lifecycle?
+
+A) Users would create a Dockerfile with a set of instructions or commands that defines a docker image. For example, which base image to choose ? what dependencies should be installed for the application to run ? e.t.c.,.
+Docker images act as a set of instructions to build a Docker container, It can be compared to a snapshot in a VM.
+
+docker build -> builds docker images from Dockerfile
+docker run -> runs container from docker images
+docker push -> push the container image to public/private regestries to share the docker images.
+
+4) main components  of docker?
+Docker Client: this the cli
+Docker Host: Docker Deamon is brain of Docker. If Docker Deamon is killed, stops working for some reasons, Docker is brain dead.
+Registry: docker registry or this can be anything
+
+5) difference between COPY and ADD?
+A) docker copy will copy the files rom the url (to copy from s3 lik that)unlike docker add will copy in to container from host operating system.
+One major diff between ADD and COPY is if you add a file present in .tar.gz format it'll be automatically unzipped in created container whereas copy doesn't have this feature
+
+6) Difference between CMD and Entrypoint in docker?
+A) CLI arguments using the docker run coomand will override the arguments specified using the CMD instruction.
+   whereas Entrypoint instruction in the shell form will override additional arguments provided using CLI parameters or even through the CMD commands.
+
+7) what are the Networking Types in docker and what is the deafult?
+A) 1)bridge network(default network) :The default network mode in Docker. It creates a private network between the host and containers, allowing containers to communicate with each other and with the host system
+   2)Overlay : This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts.
+   3)Host : This mode allows containers to share the host system's network stack, providing direct access to the host system's network.
+   4)MacVlan Network : This mode allows a container to appear on the network as a physical host rather than as a container.
+
+8) can you explain how to isolate networking between the containers?
+A) If you want to secure your containers and isolate them from the default bridge network you can also create your own bridge network.
+
+        docker network create -d bridge my_bridge
+
+9) what is a multi stage build in docker?
+A) Multi stage builds allow you to build your docker container in multiple stages allowing to copy artifacts from one stage to another. the major advantage of this is to build light weight containers.
+we copy the only the binaries from earlier stages and run time.
+
+10) what are distroless images in docker?
+A) distroless images contain only your application and its runtime dependencies with a very minum operating system libraries. they do not contain package managers, shells or any other programs you would expect to find in a standard linux distribution. they are very small and lightweight images
+ (100mb to 1mb) even ping will not work in distroless images
+
+
+realtime challanges with docker?
+1) docker is single daemon process.which can cause single point of failure,if the docker daemon goes down for some reason all the applications are down. ( we can say podman address this issue that does not have a daemon,iam learning podman which will take all the instructions of docker like podman build, podman run Solution is podman. Which solves your docker problem. It is not single point failure, it can run as normal non-root user. , we can also do builda)
+2) DOCKER DAEMON RUNS as root user. which is security threat. any process running as a root can have adverse effects. (if we give ps-ef we can know it is running as root, suppose hacker got access to root he can access entire cluster or even host- again this is solved by podman)
+when it is comprised for security reasons, it can impact other applications or containers or containers on the host.
+3)Resource Constraints: if you are running too many containers on a single host , you may experience issues with resource constraints. this can result in slow performance or crashes. (if one container has memory leak it will imapact other containers if not properly configured)
 
 
 
-4) Question: what are real-time challanges with docker?
+12) what steps would you take to secure containers?
+A) 1) use Distroless images or images with not too many packages as your final image in multistage build, so there is less chance of CVE(Common Vulnerabilities and Exposures) or security issues.
+  2) Ensure that the networking is configured properly. this is one of the most common for security issues. if required configure custom bridge networks and assign them to isolate containers.
+   3) use utilities like sync to scan your container images.
+
+
+
+
+13) docker prune is a command in Docker that allows you to remove unused Docker objects. This command helps in cleaning up Docker resources that are no longer in use, thereby freeing up disk space and improving Docker's performance. Here's how you can use it:
+
+ docker system prune -f
+
+14) how do you check the vulnerabilities of docker image we created.  
+A) sync
+
+15.What happens if you update the image to the existing will it overwrite? 
+A) Yes, if you update the image to the existing one, it will overwrite the existing image. This is because Docker images are immutable, meaning that they cannot be changed once they are created.
+
+16) What happens if you update the image while container is running?
+If you update the image while a container is running, the container will continue to run the old image. The new image will not be applied to the running container until it is restarted.
+
+
+
+
+
+Question. What is multi stage build in docker ?
+Ans. Concept of container itself is to keep it lightweight. 
+Multi stage build allows you to build your docker container in multiple stages allowing you to copy artifacts from one stage to other. The major advantages of this is to build light weight containers. All dependencies and heavy base image were required only in build stage 
+Final application build artifact(jar file) requires only Java runtime, not the dependencies required to build the application.
+So, final image size will drop from 800 MB to 20 mb.
+
+Ques. What are distroless images in docker 
+Ans. Containers are also  exposed to security vulnerabilities, cuz they are minimal os, still. Some images such as ubuntu comes with os related vulnerabilities or MySQL related dependencies.
+To solve this, image size was further shrunk. Distroless image are very very minimal such as scratch are hardly 1-2 mb. Instead of base image use distroless image. You don't even have basic command such as apt.
+
+
+
+
+
+
+
+
+
+
+5) Question: what are real-time challanges with docker?
 Ans. Docker has a single point of failure. If docker daemon goes down, application is down. 
 - docker run as root user which is a security threat.
 - resource constraints - 
