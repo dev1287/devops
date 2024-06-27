@@ -1,1 +1,2 @@
-
+1) Difference between Docker vs kubernetes?
+A) Docker is a container platform it makes container journer easy using docker engine or CLI. kubernetes is container orchestration platform
