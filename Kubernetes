@@ -213,7 +213,77 @@ there are many controllers in k8's some are default and some custom like argo-cd
 so dont create the pod directly.
 ----------------------------------------------------------
 difference between deployment and replicaset.
-A) whenever we create a deployment , a replica set is automatically created
+A) whenever we create a deployment , a replica set is automatically created which is a controller which manages the auto-healing on the state on basis manifest yaml  file that is submitted during deployment.
+
+----------------------------------------------------------------------------------------------------
+
+to get all the details of resources of a particular namespace in realtime we use: kubectl get all
+to get all the details for the name spaces use: kubectl get all -a
+
+--------------------------------
+below is code for delpoyment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+---------------------------------------------------------------------------------------
+to create deplyment: kubectl apply -f deployment.yml   (-f flag stands for file that contains the configuration to be used)
+to get deploy: kubectl get deploy
+to get replica set: kubectl get rs
+to get pod: kubectl get pods
+
+kubernetes controler is nothing but a golanguage application which was written by k8 team to ensure the desired state is avaiable in cluster.
+-----------------------------------------------------------------------------------------
+to watch pods it will show you whats happening with pods: kubectl get pods -w
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+k8s Service:
+suppose we created 3 replicas for 100 concurrent users i.e at the same time ,to reduce the load of all the traffic on single pod  we distribute the traffic among 3 we use replica so that load is shared.
+if any one ask what is count of your pods you can it depends on no of users if one pod accepts up to 10 users then if 100 users comes we need 10 pods. developers and devops will take this decision.
+in the world of k8s or containers a pod going down is very common. but k8s had auto healing as soon as pod is getting deleted new pod comes before the deletion of earlier pod. but the ip-address of new pod 
+is different than earlier. suppose we gave project1 to test to a team we gave ip 172.16.3.4 but the pod was deleted and new pod came the ip was 172.16.3.5 but test team was accesing earlier ip they will have error.
+so to avoid above issue on top of deployment------------we create service(svc:) what service will do is it acts as a Loadbalancer by using a component called kubeproxy. so instead accessing applications
+by ip we access it by service name like "payments.default.svc". so the service using kubeproxy will forward the requests to ipaddress by sharing.
+
+so without services applications are not accesable for some users.
+
+we should get question how service will identify the new pod which ipaddress han changed , how it will direct the users to new pod with new ipaddress. to overcome this instead of using
+ipaddress which changes frequently service uses service discovry by using labels and selectors. what is this labels and selectors is for every pod that is getting created devlopers will apply
+a label for all the same pods, like a label payment for all payment pods. so the service will keep track of label instead of ipaddress when replicaset creates a pod then this problrm is solved as new pod receives
+the name as it manifestfile.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
