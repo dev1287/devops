@@ -129,8 +129,91 @@ created aws bucket from cli : aws s3api create-bucket --bucket kops-raghu-storag
 -----------------------------------------------------------------------------------------------------------------
 kubernetes says dont install your container directly but run as pod. in kubernates we pass the arguments in docker command in yaml file of pod that the only difference.
 pod is 1 (or) group of container (mostly we keep multiple container for side-car, init)
+like in side-car we use api-gateway rules and loadbalancer rules)  populr use case is servive-mesh which we use side car container
 if we keep 2 containers in same pod they can share network and shared storage and shared files but this is rare case.
-ipaddresses are assinned for pods not for container.
+ipaddresses are assignned for pods not for container.
+we are writing same docker commands of CLI in YAML for Declarative syntax.
+
+
+
+
+
+
+
+
+init and sidecar:
+
+Timing: Init containers run and complete before the main application container starts, whereas sidecar containers run alongside the main container.
+Purpose: Init containers are used for setup and initialization tasks, while sidecar containers extend or enhance the main container's functionality during its runtime.
+Dependencies: Init containers must complete successfully before the main container starts, ensuring that any dependencies or setup tasks are fulfilled before the main application begins execution.
+
+
+what is kubectl?
+kubectl is command line tool for k8's to interact with k8 clusters.
+
+to see number of nodes: kubectl get nodes
+to see number of pods: kubectl get pods
+--------------------------------------------------------------------------------------------------------------------
+not for realtime:
+minikube creates vm and on top in it creates single node kubenetes cluster.
+minikube start --memory=4096  --driver=hyperkit
+Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+to login in learning cluster:minikube ssh
+to check pod is live or not: curl 10.244.0.3
+----------------------------------------------------------
+below is pod.yaml file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+
+----------------------------------------------------------------------------------------
+to create pod: kubectl create -f pod.yml
+to see number of pods: kubectl get pods
+to delete pod: kubectl delete pod nginx
+
+
+to see more detiails of pod: kubectl get pods -o wide
+inreatime we will ssh to k8 master or node ip.
+---------------------------------------------------------------------------------------------------------------------
+how to get auto scaling and auto healing in kubernetes:
+on top of pod we have a wrapper called deployment to get features of auto scaling and auto healing.
+
+we will say Kind: deployment in yaml file instead of pod
+
+in realtime this is way to deploy our apps new never do kind:pods, we will do deployments,satefulsets,daemon sets
+
+to see logs of pod: kubectl logs nginx
+to see all info of pod(even to debug we use same command): kubectl describe pod nginx
+------------------------------------------------------------
+how to debug pods?
+A) we use "kubectl describe pod nginx" and "kubectl logs nginx"    here nginx is name of pod.
+
+--------------------------------------------------------------------------------------------------------------------------
+difference between container , POD and deployment?
+container to run we use cli for running
+pod use manifest(pod.yaml) for enterprise level support,  a pod can be single or multiple container. if you use a  pod we can share the resouces,volumes and same network.
+deployment we use for auto-healing and auto-scaling ( if we create a deployment it will create intermediate deployment called replica sets(this is kubernetes controller) this controller will create pod at last)
+(we can just say inside depl0yment we can mention no of replicas to multiple concurrent users.(we call it HA and load balancing), if a user says i have deleted pod accidently k8's by using controller(replica set)
+will still recreate the second deleted pod by user automatically by auto healing by using deployment manifest file we have submitted.
+
+controller make sures desired state is always maintained in the actual cluster from manifiest yaml file we have given to k8. any thing the maintains the state is a controller 
+there are many controllers in k8's some are default and some custom like argo-cd, admission controllers.
+
+
+so dont create the pod directly.
+----------------------------------------------------------
+difference between deployment and replicaset.
+A) whenever we create a deployment , a replica set is automatically created
 
 
 
