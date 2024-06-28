@@ -256,7 +256,7 @@ to watch pods it will show you whats happening with pods: kubectl get pods -w
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------
-k8s Service:
+k8s Service: ((1)Load Balancing (2)Service discovery (3)Expose to world)
 suppose we created 3 replicas for 100 concurrent users i.e at the same time ,to reduce the load of all the traffic on single pod  we distribute the traffic among 3 we use replica so that load is shared.
 if any one ask what is count of your pods you can it depends on no of users if one pod accepts up to 10 users then if 100 users comes we need 10 pods. developers and devops will take this decision.
 in the world of k8s or containers a pod going down is very common. but k8s had auto healing as soon as pod is getting deleted new pod comes before the deletion of earlier pod. but the ip-address of new pod 
@@ -265,14 +265,22 @@ so to avoid above issue on top of deployment------------we create service(svc:) 
 by ip we access it by service name like "payments.default.svc". so the service using kubeproxy will forward the requests to ipaddress by sharing.
 
 so without services applications are not accesable for some users.
-
+--------------------
 we should get question how service will identify the new pod which ipaddress han changed , how it will direct the users to new pod with new ipaddress. to overcome this instead of using
 ipaddress which changes frequently service uses service discovry by using labels and selectors. what is this labels and selectors is for every pod that is getting created devlopers will apply
 a label for all the same pods, like a label payment for all payment pods. so the service will keep track of label instead of ipaddress when replicaset creates a pod then this problrm is solved as new pod receives
-the name as it manifestfile.
+the name as it manifestfile. (we will just mention label in metadata for service discovery)
+------------------------
+Service can expose our application outside the k8's cluster, (note: deployment can give access to app byr login to ssh to master or node it cant expose to outer world)
+
+whenever we are creating a k8 service resouce in yaml manifest we can create service from 3 default types below.
+1) cluster ip (with in k8 cluster)
+2) Node port (with in the organization)
+3) Load balancer (entire world)
+4)ExternalName
+5) headless service 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 
 
