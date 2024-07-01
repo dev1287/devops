@@ -326,6 +326,29 @@ to get all deployments: kubectl get deployments
 
 to delete deplyment: kubectl delete deployment nginx-deployment
 
+build docker images: docker build -t vdeepikavr/python-sample-app-demo:v1 
+----------------
+push to repository:
+docker tag vdeepikavr/python-sample-app-demo:v1 vdeepikavr/python-sample-app-demo:v1
+docker push your-dockerhub-username/python-sample-app-demo:v1
+--------------------------------------------------------------------------------------------------------------------------------------------
+kubectl apply -f pyappdeply.yml
+
+kubectl get deploy
+
+kubectl get pods -o wide
+
+to get full info about api call : kubectl get pods -v=7 or kubectl get pods -v=9
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
