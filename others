@@ -1,0 +1,16 @@
+WAF filters and protects web applications.
+TLS encrypts data during transmission.
+When to Use
+WAF: For blocking web-based attacks.
+TLS: For secure data transmission.
+--------------------------------------------------------------------------------
+
+Feature	Web Application Firewall (WAF)	Transport Layer Security (TLS)
+What It Does	Protects web applications from attacks	Encrypts data in transit
+Focus	Application Layer Security (Layer 7)	Transport Layer Security (Layer 4)
+Main Purpose	Block malicious web traffic and attacks	Ensure secure communication between client and server
+Examples of Attacks	SQL Injection, XSS, CSRF	Eavesdropping, MITM attacks
+Used For	Filtering HTTP/HTTPS requests	Encrypting HTTP traffic (HTTPS)
+Typical Use Cases	Application security, threat protection	Data encryption, secure connections
+Key Technologies	AWS WAF, Azure WAF, Cloudflare WAF	HTTPS, SSL/TLS Certificates
+Example Command	aws wafv2 create-web-acl ...	openssl req -newkey rsa:2048 -nodes .
