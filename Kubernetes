@@ -290,7 +290,37 @@ choose Flannel for simplicity and basic networking needs, and opt for Calico whe
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1) difference between docker and k8's
 2) architecture of k8's
-3)
+3) difference bettween docker swarm and kubernetes?
+A) docker swarm is dcoker based solutions for simple scale application or small scale companies. k8's can do advance networking capabilities and also we have lot of 3 rd party commmunity ver high for k8's.
+also for large scale enterprise companies k8's is best.
+4) difference between k8's pd and docker container?
+5) what is an namespace in k8's?
+A) In Kubernetes namespace is a logical isolation of resources, network policies, rbac and everything. For example, there are two projects using same k8s cluster. 
+One project can use ns1 and other project can use ns2 without any overlap and authentication problems.
+namespace is nothing but logical isolation of network, resources and Rbac etc. we can restrict resources sharing other namespace resources.
+6) what is the roles of kube-proxy?
+A) Kube-proxy works by maintaining a set of network rules on each node in the cluster, which are updated dynamically as services are added or removed. When a client sends a request to a service, the request is intercepted by kube-proxy on the node where it was received. Kube-proxy then looks up the destination endpoint for the service and routes the request accordingly.
+Kube-proxy is an essential component of a Kubernetes cluster, as it ensures that services can communicate with each other.
+
+7) what are different types of services with in k8s?
+A) 1)Clustet IP Mode, 2)Node port Mode and 3)Load balancer Mode
+
+8) What is the difference between NodePort and LoadBalancer type service ?
+When a service is created a NodePort type, The kube-proxy updates the IPTables with Node IP address and port that is chosen in the service configuration to access the pods.
+Where as if you create a Service as type LoadBalancer, the cloud control manager creates a external load balancer IP using the underlying cloud provider logic in the C-CM.
+Users can access services using the external IP
+
+9) what is the roles of kubelet?
+A) Kubelet manages the containers that are scheduled to run on that node. It ensures that the containers are running and healthy, and that the resources they need are available.
+Kubelet communicates with the Kubernetes API server to get information about the containers that should be running on the node, and then starts and stops the containers as needed to maintain the desired state. 
+It also monitors the containers to ensure that they are running correctly, and restarts them if necessary.
+
+10) day to day actvities on k8s?
+A) As part of my role, we manage k8s clusters and applications that are deployed in k8s are running correctly and we also monitor them and esure when they are bugs like developers are not able to trubleshoot services. whe also developers team is unable to route the traffice in k8s
+we resolve them in k8s cluter. we also do maintaining activities we have kubernets cluster with  3 master nodes and 10 worker nodes we have to do contious activites on worker nodes updraging versions of worker nodes.
+installing mandatory packages and make sure workers nodes are not exposed to nay security vunarabilities. if anyone has any issue with k8's they create jira items / tickets we try to resolve the.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
