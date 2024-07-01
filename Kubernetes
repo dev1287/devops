@@ -429,11 +429,14 @@ before 2015 version 1.1 , ingress was not there
 people used to do load balancing using nginx or F5 these are Enterprise LoadBalncers they option like 
 RatioBased load balancing: send 3 requets to node1 and 1 to node2 etc
 Sticy Session: if a user first request goes to node1 the next request also should go to node1 only
-pathbased load balacing:
-domain
+pathbased load balacing: Route /api requests to API Server and /app requests to Web Server.
+domain: Route example.com to App Server 1 and api.example.com to App Server 2.
 whitelisting : only allow specific customers to allow apps
 black list: donot allow users from uk
 --------------------------------------------
+
+service was providing load balancing mechanism but thatw as simple round robbin machanism (suppose if there are 2 nodes and 10 requests 5 req goto node1 and other 5 to node 2 this simple load balancing).
+
 
 
 
