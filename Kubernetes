@@ -1,4 +1,4 @@
-1) Difference between Docker vs kubernetes?
+r1) Difference between Docker vs kubernetes?
 A) Docker is a container platform it makes container journer easy using docker engine or CLI. kubernetes is container orchestration platform
 
 problem1: ( All are in single host)
@@ -345,6 +345,111 @@ to get full info about api call : kubectl get pods -v=7 or kubectl get pods -v=9
 minikube ssh
 curl -L http://10.244.0.19:8000/demo
 ----------------------------------------------------------------------------------
+mention version of app in deplyment.yml
+image: vdeepikavr/python-sample-app-demo:v1   # Added tag v1
+
+-----------------------------------
+service.yml:
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-raghu-servive-one
+spec:
+  type: NodePort
+  selector:
+    app: sample-python-label-app
+  ports:
+    - port: 80
+      # By default and for convenience, the `targetPort` is set to
+      # the same value as the `port` field.
+      targetPort: 8000
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane
+      # will allocate a port from a range (default: 30000-32767)
+      nodePort: 30007
+-------------------------
+deplyment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-appnname
+  labels:
+    app: sample-python-label-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-python-label-app
+  template:
+    metadata:
+      labels:
+        app: sample-python-label-app
+    spec:
+      containers:
+      - name: python-appname
+        image: vdeepikavr/python-sample-app-demo:v1   # Added tag v1
+        ports:
+        - containerPort: 8000
+----------------------------------------------------------
+in service.yml change the target port to 8000 (or port which our application is running
+
+service works on labels not ip
+
+
+kubectl apply -f service.yml
+kubectl get svc
+---
+minikube ssh
+curl -L http://10.107.204.76:80/demo
+---
+
+to get the ip of minikube node: minikube ip
+192.168.49.2
+curl -L http://192.168.64.10:30007/demo
+now app can be access from above url also
+------------------------------------------------------------
+to change to load balancer:
+
+kubectl get svc
+kucectl edit svc python-raghu_servive-one
+---you will see the "type: NodePort" change it to "type: LoadBalancer"
+
+it will work only in cloud not in minikube
+-------------------------------------------------------------------
+if you want to see the packet flow install "kubeshark" in k8's, to see how rquest flows.
+know about wireshark and tcp dump
+------------------------------------------------------------------------------
+
+
+INGRESS(38):
+
+before 2015 version 1.1 , ingress was not there
+
+people used to do load balancing using nginx or F5 these are Enterprise LoadBalncers they option like 
+RatioBased load balancing: send 3 requets to node1 and 1 to node2 etc
+Sticy Session: if a user first request goes to node1 the next request also should go to node1 only
+pathbased load balacing:
+domain
+whitelisting : only allow specific customers to allow apps
+black list: donot allow users from uk
+--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
