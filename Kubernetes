@@ -274,13 +274,23 @@ the name as it manifestfile. (we will just mention label in metadata for service
 Service can expose our application outside the k8's cluster, (note: deployment can give access to app byr login to ssh to master or node it cant expose to outer world)
 
 whenever we are creating a k8 service resouce in yaml manifest we can create service from 3 default types below.
-1) cluster ip (with in k8 cluster)
-2) Node port (with in the organization)
+1) cluster ip (with in k8 cluster only we access the app, this is default behaviour we get 2 benefits discovery and load balancing, outside users cant access, devops enginner etc who has access)
+2) Node port (with in the organization we can access the app, it will allow anyone who has access to any master, worker node 1 or 2 or 3 or people who has access to org vpn and node and k8 networking can access)
 3) Load balancer (entire world)
+suppose we are deploying service type as Load balancer in EKS, we get elastic load balancer ipaddress. they can access using public ip address
 4)ExternalName
 5) headless service 
 
+
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+K8s networking:
+choose Flannel for simplicity and basic networking needs, and opt for Calico when you need advanced network policies and potentially better performance.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) difference between docker and k8's
+2) architecture of k8's
+3)
 
 
 
