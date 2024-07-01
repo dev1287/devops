@@ -322,6 +322,9 @@ installing mandatory packages and make sure workers nodes are not exposed to nay
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+to get all deployments: kubectl get deployments
+
+to delete deplyment: kubectl delete deployment nginx-deployment
 
 
 
