@@ -438,6 +438,98 @@ black list: donot allow users from uk
 service was providing load balancing mechanism but thatw as simple round robbin machanism (suppose if there are 2 nodes and 10 requests 5 req goto node1 and other 5 to node 2 this simple load balancing).
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+problem 1 in services: in realtime for amazon there will be 1000s of services for each service they have to assign staticipaddress  which cloud provider charges amount for each.
+problem2:  also we are exposing all 1000 static ip outside.
+--------------------------------------------------------
+to sum up enterprise loadbalacing and tls in vms are missing in k8s
+
+openshift has implemented Routes to solve this and k8's ha simplemented ingress later
+-----------------------------
+how ingress solves about issuse:
+kubernetes said users will create Ingress and resource and can use ingress controllers from load balancers.
+
+suppose we need path based routing: inside yaml we will mention routebased load balancer
+and we must also deploy ingress controller(load balancer + API gateway) using yamlfiles,helm charts.
+
+if ingress controller is missing no matter how many ingress resources we create it is waste. these ingress controller will check ingress resources and do that load balancer things.
+----------------------------
+ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-example
+spec:
+  rules:
+  - host: "foo.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/bar"
+        backend:
+          service:
+            name: python-raghu-servive-one
+            port:
+              number: 80
+
+-------------------------------------------------------------------------------------
+kubectl get svc
+
+kubectl apply -f ingress.yml
+
+ kubectl get ingress
+
+
+to install ingres in minikube: minikube addons enable ingress
+
+to verify ingress installed or not: kubectl get pods -A | grep nginx
+kubectl logs ingress-nginx-controller-768f948f8f-8hf6b -n ingress-nginx
+
+kubectl get ingress
+
+
+ingress class names: are used to define multople controllers (nhinx and HA-proxy)
+
+routes does not support TLS certificates, so many use ingress instead of routes in openshift.
+
+
+------------------------------------------------------------------------------------------------------------
+RBAC: Role Based Accessed Control
+RBAC is directly related to security
+
+use case1: we can give access to users
+RBAC can be divide din to Two parts 1)Users 2)Service Accounts
+what acess developer and qe have access in namespace and etcd all this can be defined in RBAC.
+
+use case2: what access should pod have 
+what acess should pod have ,should it have acess to (1)Configmaps and (2)Secrets 
+
+To k8's there are 3 major things for managing RBac's:
+1)Service Accounts/Users
+2)Roles/Cluster Role
+3)Role Binding / Cluster Role Binding
+
+-----------------------------------------------------------------
+how do you create users in K8's
+
+k8's does not deal with usermanagement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
