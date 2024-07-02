@@ -620,6 +620,64 @@ env:
 
 
 changing the env variables inside the container is not possible it does not allow, we can only re create the container. once if we change dbport in config-map it will not change automatically.
+in production we can restart the containers it may incur traffic loss. so other way k8 suggets is VolumeMounts(saved as files).
+
+VolumeMount:
+inside specs At the level of the containers you create volumes
+--------------------
+Volumes:
+  -name: db-connection
+   configMap:
+     name: test-cm
+-------------------------
+
+and inside containers write below
+------------------------
+VolumeMounts: 
+  -name : db-connection
+   ConfigMap: 
+   mountPath: /opt
+------------------------------------
+
+
+to create secrets:
+$ kubectl create secret generic test-secret2 --from-literal=user-name="ragh"
+secret/test-secret2 created
+
+kubectl describe secret test-secret2
+
+kubectl edit secret test-secret2
+(it will encrypt in base64 we can also do custom if required)
+
+we can use hashicorp vault or seal secrets for more customization of secure
+
+
+know about etcd security encryption at etcd.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+promotheus:
+
+why monitoring:
+as no of k8 clusters increases like dev, production we need promotheus to monitor, promotheus has a http server which collect all metrics that k8's API-SERVER exposes by default ans stores them
+in a time-series database.
+
+
+
+grafana: is for visulaization
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -633,6 +691,7 @@ note:
 we use kubectl apply... over kuberctl create...
 Because when apply cmd is used, we can simply kubectl edit... the concerned files, without applying again.
 In kubectl create..., you can't use use kubectl edit, you need to manually change the YAML and and create again.
+
 
 
 
