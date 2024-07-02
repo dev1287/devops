@@ -512,7 +512,115 @@ To k8's there are 3 major things for managing RBac's:
 -----------------------------------------------------------------
 how do you create users in K8's
 
-k8's does not deal with usermanagement.
+k8's does not deal with usermanagement. it offloads the usermanagement. in k8s the api-server works as oAuth server. 
+suppose we are in Eks are any Identity provider,we can use IAM users, using Iam and providing and creating iam provider or oAuth Provider we can provide login access lo k8's.
+Keycloak is one of the major provider identity acess provider.
+supoose we can integrate EKS with Keycloak and using keycloak we can connect with github. using github we can do user management.
+service accounts we just create yaml files (serviceaccount.yaml).
+by default when a pod is created a default service account is associated with it automatically. and using service account only all the application running will be talking to API server.
+to define access k8s defines 2 method (1) Role/Cluster Role(when cluster level permissions) (2)Role-Binding/Cluster Binding
+----------------------
+first we create role and say they should have access to pod, config maps and secrets , if thet have to have access to cluster we create cluster roles.
+to attach this roles we uses role-binding.
+
+-----------------------------------------------
+we create service account and we create a role and using role we bind service account and role binding. with role we cant bind service account and role binding.
+
+service account (it has users), roles (it has permissions) and role-binding (using this we bind users with permissions).
+
+---------------------------------------------
+Custom Resource Defnition (CRD),Custom Resources and custom Controller:
+
+if you want to introduce a new resource to k8s, for example like we want more security to k8's we can use kubehunter, kube bench etc. we have apps like ARGO-CD, flux, spinnacare. ot
+to extend the api of k8's.
+
+1) devops: deploying the custom resource defnition and custom controller is the responsibility  of devops enginner
+2) user: deploting the custom resource can be the action of user or devops enginner as well.
+
+one we started exploring k8s we rialize they are many things to explote like for example
+
+1) Istio : which gives service mesh capabilitties 
+2) Argo -CD : which give gitops functionality.
+3)Key cloak: Iam, OAuth functinality.
+4) for securith we have kube-bench.
+
+to handle all these additional capabilities users can extend the API of k8s by using CRD, Custom resurces and Custom Controller.
+
+-> people of Istion will define a new resouce API to k8s by using a Custom Resouce defnition(CRD) to k8s. this CRD is yaml file in which we define what a user  can create for example
+if we are a user who create deployment.yml file we mentioned API,kind,pod , template,container beyond this how does k8s understand the deplyment.yaml we are doing is correct or not 
+like tomorrow we may add volumes or we may add new feature called XYZ. so k8s will have template/resource defnition already in controller when ever we  create fileld xyz kks will say field xyz is not known. k8's will have a defnition
+out of this we can define what is required or omit which is not required. similarly for even custom resource before any one supports k8s ask for the file for example in that file
+IStio writes what services it supports, like istio has virtual service which it supports(this virtual service is a custom resource). this custom resource is validated by Custom resource defnition which istio people
+has submitted to k8s.
+
+A CRD is yaml file which is used to introduce a new ApI to K8s that will have all the fields user can define in k8s.
+
+suppose organisation decided to use istio:
+step 1) first we deploy a custom resource defnition (crd) using plane k8s manifets/helm charts or by using operator. (now virtual service crd is deployed in k8s)
+     2) suppose there is an user who creates custom resource in a namespace inside namespace he will create Istiovirtualservice custom resource from istio which is validated against CRD and gets deployed.
+     3) it will just stay after validation not activated after deployment , next devops should deploy a custom controller acroos the cluster or only for that namespace. now custon controller,
+          will monitor the custon resource user is created i.e Istiovirtualservice.
+
+we can write a custom controller using golang, python or java. (k8s has API client-go which will interact with k8's API SERVER.). we will define or create new watchers and listers using client-go .
+when ever update,delete and  create in k8s kubernetes has in built watchers to monitor. 
+
+
+using controller-runtime we can set watchers in k8s, when ever there is crud this watchers will notify client-go
+client go there is a package called reflector using reflector we can understand there is an update,create, delete we can put in worker fifo queue we start processing each queue resource.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+suppose out of k8, there is an backend app which needs to connect with db to get some info and give the output to enduser. to connect backend with db we need some info of db details for backend to connect like 
+db port , db connection type etc and these need to be passed to backend but those should not be hardcoded as if details changed like any dbport the end user cant get details. 
+
+for that generally we keep that credentials in a file and use it by importing file using os-import in python.
+------------------
+
+config Maps and secrets:
+
+what is an config map in k8s:
+To connect to DB in k8s we create config-maps and keep details like db -port etc. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
