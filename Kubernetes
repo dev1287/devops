@@ -576,10 +576,50 @@ db port , db connection type etc and these need to be passed to backend but thos
 for that generally we keep that credentials in a file and use it by importing file using os-import in python.
 ------------------
 
-config Maps and secrets:
+config Maps :
 
 what is an config map in k8s:
-To connect to DB in k8s we create config-maps and keep details like db -port etc. 
+To connect to DB in k8s suggets we create config-maps and keep details like db -port etc inside config-map. in containers (as part of environment variable or file like) k8's says we support config-maps. 
+you can mount this confog-map,or the the details of config-map can be used inside pod as env variable or file,volume mounts but this information should come from config-map only.
+
+so config-maps are used to store the information that can be used later by application,pod aor deployment
+
+
+
+Secrets: secrets deal with sensitive data
+
+suppose we store dbpassword in config-maps, when ever we create a resource then information is stored etcd. but in etcd the data is stored as objects. when ever there a hack then they can see the data in 
+etcd. our entire platform is comprmised. to solve this we store sensitive data in secrets and non-sensitive data in config-maps.
+
+if we store in secrets before object is stored in etcd  it will encrypt this at rest. by defaulit k8s uses default encryption we can also used custom encryption. because of it
+even its hacked user cant read data as he has no encryption key.
+
+As a user we create config-maps using yaml file we will use kubectl apply and create this config-map. at the same time api-server is saving this info in etcd.
+
+if a hacker has access to k8s cluster he can come to config-maps and see the data by using kubectl describe or kubectl edit config maps. (1) so we have to keep in secrets which will be encrypted
+(2) we should also use RBAC to control who can access to etcd.
+
+(least previlage = only grant least acess very less people should  have access to etcd)
+--------------------------------------------------------------------------------------------------
+vim cm.yml
+kubectl apply -f cm.yml
+
+reply after above command: configmap/test-cm created
+
+kubectl get cm
+kubectl describe cm test-cm
+
+
+in spec we have write of deployment file:
+env:
+  -name: DB-PORT
+   valueFrom:
+    ConfigMapKeyRef:
+      name: test-cm
+      key: db-port
+
+
+changing the env variables inside the container is not possible it does not allow, we can only re create the container. once if we change dbport in config-map it will not change automatically.
 
 
 
@@ -587,53 +627,12 @@ To connect to DB in k8s we create config-maps and keep details like db -port etc
 
 
 
+-------------------------------------------
+note:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+we use kubectl apply... over kuberctl create...
+Because when apply cmd is used, we can simply kubectl edit... the concerned files, without applying again.
+In kubectl create..., you can't use use kubectl edit, you need to manually change the YAML and and create again.
 
 
 
