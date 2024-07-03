@@ -691,6 +691,19 @@ note:
 we use kubectl apply... over kuberctl create...
 Because when apply cmd is used, we can simply kubectl edit... the concerned files, without applying again.
 In kubectl create..., you can't use use kubectl edit, you need to manually change the YAML and and create again.
+it stores on a node using hdd or ssd.
+we can configure promtheus with alertmanager we can send alert to slack, if api server is not responsing then send to alertmanager, so the alert manager based on no of things we have setup we can send email,
+sms.
+
+we can go to promotheus Web UI and execute prompql queries or we can get from dashboard like grafana or any other.
+
+grafana is just for data visualization with charts etc from data we get from promotheus.
+
+
+bu default we get only metrics that k8 sends.if we nwwd we can customize.
+
+
+
 
 
 
