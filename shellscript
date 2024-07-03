@@ -1,1 +1,24 @@
-shell
+1) to print particular line from a file  ---> curl google.com | grep HREF
+
+$ curl google.com
+
+(below is output for above command)
+-----------------------
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   219  100   219    0     0   3059      0 --:--:-- --:--:-- --:--:--  3128<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+-----------------------
+$ curl google.com | grep HREF
+(below is output for above command)
+--------------------------------
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   219  100   219    0     0   3168      0 --:--:-- --:--:-- --:--:--  3268
+<A HREF="http://www.google.com/">here</A>.
+--------------------------------
+========================================================================================================================================================================================
