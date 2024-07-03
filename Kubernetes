@@ -700,7 +700,11 @@ we can go to promotheus Web UI and execute prompql queries or we can get from da
 grafana is just for data visualization with charts etc from data we get from promotheus.
 
 
-bu default we get only metrics that k8 sends.if we nwwd we can customize.
+bu default we get/can qyery only metrics that k8 sends.if we need we can customize.
+
+we need to set datasource for grafana 
+
+3662 is the standard template in grafana.
 
 
 
