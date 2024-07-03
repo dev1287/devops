@@ -10,7 +10,25 @@ ls -ltr   : if it start with d it a directory or its a file, also we have who is
 drwxr-xr-x 1 ragha 197609         0 Jul  3 09:30  IntelGraphicsProfiles/
 ---------------------------------------------------------
 touch rag{1..10} : created file rag1, rag2 , rag3, rag4....rag10
-touch rag{1..10}  : creates file 
+touch rag{1,10}  : creates file rag1 and rag10
+vi raghu : a file raghu is created if does not exists or open existing file with that name
+car raghu : prints contents of the file
+mkdir {1,2} : creates directory 1,2
+mkdir -p to/your/nested2/folders : creates nested folder even if already exists or does not folder exists
+rm raghu: remove  a file
+rm -r nested : remove a directory nested or we can also remove a file
+rm -r * : removes everything in a directory cant be recovered
+free : fto know memory details 
+free -g : to know memory details , better readability
+nproc : no of cpu cores available
+df -h : disk size
+top : get complete info like memory,disk, cpu
+touch first-shell-script.sh  : creates a shell script file
+man ls: gives manual and options of ls command
+vim file : vim creates a file and also opens a file if there are 1000 files 
+
+
+
 
 1) to print particular line from a file  ---> curl google.com | grep HREF
 
