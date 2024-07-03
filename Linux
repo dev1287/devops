@@ -1,1 +1,11 @@
+why linux? 
+It is Free, Secure,Opensource, Multiple Distributions, fast
+
+Architecure Linux os:
+1)Heart of linux is Kernal    (kernal is responsible for device management,memory management, process management, handling system related calls)
+2) on top kernel we have system libraries  (they are responsible for performing a task example: libc is one of the system library)
+3) on top of system libraries, we have compilers,         we have soem user proccesses  , we have system software  (if we want java we need java compilers etc)
+
+
+
 
