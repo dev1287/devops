@@ -1,3 +1,17 @@
+in linux we talk to our linux os with shell commands.
+
+ls       : to list files
+cd ..    : to move back to last directory
+pwd      : to know present working directory
+cd <foldername>  : to move to a directory
+ls -ltr   : if it start with d it a directory or its a file, also we have who is owner of the file, group of the file ,size of the contents of file , when was it create and name of file
+--------------------
+-rw-r--r-- 1 ragha 197609  19922944 Jul  2 23:07  NTUSER.DAT
+drwxr-xr-x 1 ragha 197609         0 Jul  3 09:30  IntelGraphicsProfiles/
+---------------------------------------------------------
+touch rag{1..10} : created file rag1, rag2 , rag3, rag4....rag10
+touch rag{1..10}  : creates file 
+
 1) to print particular line from a file  ---> curl google.com | grep HREF
 
 $ curl google.com
