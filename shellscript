@@ -26,7 +26,24 @@ top : get complete info like memory,disk, cpu
 touch first-shell-script.sh  : creates a shell script file
 man ls: gives manual and options of ls command
 vim file : vim creates a file and also opens a file if there are 1000 files
-chmod 777 <filename> : permisions for you,group and all users
+chmod 777 <filename> : permisions for you,group and all users (4-read,3-write,1-execute)
+history : to see list of commads executed
+ps -ef : to se all process
+ps -ef | grep "amazon" :get only amazon process, | pipe command send output of one command to another
+ps -ef | grep "amazon" | awk -F" " '{print $2}'          : it gives amzon process id only
+
+ stdin, stdout, stdderr are communication channel
+curl https://gist.github.com/iwek/4177628.js | grep "alert"      : shows all alerts line in online url
+wget https://gist.github.com/iwek/4177628.js
+sudo find / -name raghus       : / means search everywhere
+/home/ec2-user/raghus      
+
+trap : it will trap the signal
+kill -9 java or kill -9 1111  : it will kill process name or id , it will pass a signal
+
+
+we use logrotate to deal with logs
+
 ---------------------------------------------------------
 difference between sh and bash?
 shebang line: we are defining kernel this is the executable we are using to execute the shell
@@ -45,8 +62,45 @@ to execute the shell file: sh first-shell-script.sh
 or
 ./first-shell-script.sh
 # to execute above give permissions: chmod +x first-shell-script.sh
+----------------------
+sample-shell.sh
+
+#!/bin/bah
+#create a folder
+mkdir raghus
+#move to folder
+cd raghus
+#create two files
+touch r1 r2
+-----------------------------------------------
+vim nodehealth.sh
+
+#######################################
+#Author : Raghu
+#Date : Dec-01-2022
+# This script outouts the node health
+# Version : v1
+#we cant write echo before every command,we can use set -x which gives command given, if we dont want users to see echo we can remove set -x which is debug mode 
+#
+#
+#
+########################################
+set -x #debug mode
+set -e #exit the script when there is an erroe like break, without this only that command shows error and remaining executes
+set -o #pipefail set -e will not work  freee | echo  in this as after pipe echo is there so set -e think it works well. it only check last command in pipe works or not
 
 
+#echo "print the diskspace"
+df -h
+
+
+#echo "print the memory"
+free -g
+
+
+#echo "print the cpu"
+nproc
+------------------------------------------------------------------------------------------------------------------------------
 
 
 ------------------------------------------------------------
