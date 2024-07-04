@@ -25,11 +25,31 @@ df -h : disk size
 top : get complete info like memory,disk, cpu
 touch first-shell-script.sh  : creates a shell script file
 man ls: gives manual and options of ls command
-vim file : vim creates a file and also opens a file if there are 1000 files 
+vim file : vim creates a file and also opens a file if there are 1000 files
+chmod 777 <filename> : permisions for you,group and all users
+---------------------------------------------------------
+difference between sh and bash?
+shebang line: we are defining kernel this is the executable we are using to execute the shell
+#!/bin/ksh
+#!/bin/dash
+#!/bin/sh  (earlier the sh has linking linking even though sh takes request backend it will go to bash, but latest ubuntu is redirecting to dash there will be syntax difference )
+#!/bin/bash : this are the executables that execute the shell
+---------------------------------------------------------------------------------------------------------------
+first-shell-script.sh
+----
+#!/bin/bash
+echo "this is raghu"
+----------------------------------------------------------
+cat first-shell-script.sh
+to execute the shell file: sh first-shell-script.sh
+or
+./first-shell-script.sh
+# to execute above give permissions: chmod +x first-shell-script.sh
 
 
 
 
+------------------------------------------------------------
 1) to print particular line from a file  ---> curl google.com | grep HREF
 
 $ curl google.com
