@@ -128,3 +128,44 @@ $ curl google.com | grep HREF
 <A HREF="http://www.google.com/">here</A>.
 --------------------------------
 ========================================================================================================================================================================================
+
+
+to Check the resource utilization of Aws using shell
+
+[ec2-user@ip-172-31-17-252 ~]$ bash
+
+==================================================================================================
+vim awsresources.sh
+
+##############################
+#Author: Abhishek
+#date :11th jan
+#version : v1
+#This script will report the aws resource usage
+#################################
+#
+#
+#
+#
+#Aws list s3 buckets resource details
+aws s3 ls
+
+# list ec2 instances
+aws ec2 describe-instances
+
+
+# list lambda functions
+aws lambda list-functions
+
+# list IAM users
+aws iam   list-users
+#
+==================================================================================================================================
+# will outpur one by one command by enter
+./awsresource.sh  |  more
+
+
+
+
+
+
