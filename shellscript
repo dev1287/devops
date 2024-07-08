@@ -167,10 +167,10 @@ aws iam   list-users
 to install crontab: sudo yum install cronie -y
 which crontab
 ===========================================
-export USERNAME="dev1287"
-[ec2-user@ip-172-31-17-252 ~]$ export token=""
+export USERNAME="dev1287"     (# give user name from cmd of github)
+[ec2-user@ip-172-31-17-252 ~]$ export token=""           (#give token of githib)
 [ec2-user@ip-172-31-17-252 ~]$ sh list-user.sh 
-sh list-user.sh Lenosys rrfromraghava.ravella
+sh list-user.sh Lenosys rrfromraghava.ravella            (# lenosys is organisation name and rrfromraghava.ravella is repository name)
 ==========
 output for above
 -----------
