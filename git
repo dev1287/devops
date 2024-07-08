@@ -1,1 +1,42 @@
+SVN,CVN is centralized (single point of failure)
+git is distributed
+
+
+
+.git folder contents:
+objects: every file we create inside git is treated as objects
+hooks: using hooks we stop some one unintentially commiting password and api tokens using hooks we can prevent them.
+config: it is ued to config git credentials, certificates
+head:
+ref:
+
+
+
+git diff : to find the difference in changes
+git log :to see our commits history
+git log <branchname>
+git log --oneline: to see commits in one line
+
+git reset --hard <commitid>     : to move to that commit id that has been commited, if we give previous commit id all code will show that commit id code.
+
+
+
+git remove -v : to see remote repository
+git remote add "location github/bucket"
+git clone: to pull code from git repository.  ( we can download by https by password, or by ssh using publickey)
+
+
+
+questions:
+fork and clone difference?
+fork is used clone the repository , clone is used toi download the repository
+
+
+Testing should be done in same branch oly
+
+to merge branches:
+
+git cherry-pick <commitid> : this will merge that commit id to main branch.
+Merge: Creates a merge commit and combines the histories of two branches.
+Rebase: Reapplies commits on top of another base tip, creating a cleaner, linear history.
 
