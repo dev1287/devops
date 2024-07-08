@@ -62,7 +62,20 @@ ps -ef | grep jenkins
 
 to copy from go to this path: sudo cat  /var/lib/jenkins/secrets/initialAdminPassword
 
-<img src="https://user-images.githubusercontent.com/43399466/216040281-6c8b89c3-8c22-4620-ad1c-8edd78eb31ae.png" alt="Screenshot 2023-02-01 at 5 46 14 PM" style="max-width: 100%;">
+<img src="#" alt="Screenshot 2023-02-01 at 5 46 14 PM" style="max-width: 100%;">
+----------------------------------------------------------------------------------------------
+
+Install the Docker Pipeline plugin in Jenkins:
+Log in to Jenkins.
+Go to Manage Jenkins > Manage Plugins.
+In the Available tab, search for "Docker Pipeline".
+Select the plugin and click the Install button.
+Restart Jenkins after the plugin is installed.
+
+-----------------------------------------------------------------------------------------------
+dev3-Rameshat1276
+--------------------------------------------------------------------------------------
+
 
 
 
