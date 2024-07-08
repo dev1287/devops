@@ -62,6 +62,8 @@ ps -ef | grep jenkins
 
 to copy from go to this path: sudo cat  /var/lib/jenkins/secrets/initialAdminPassword
 
+<img src="https://user-images.githubusercontent.com/43399466/216040281-6c8b89c3-8c22-4620-ad1c-8edd78eb31ae.png" alt="Screenshot 2023-02-01 at 5 46 14 PM" style="max-width: 100%;">
+
 
 
 
