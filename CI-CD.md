@@ -76,6 +76,19 @@ Restart Jenkins after the plugin is installed.
 dev3-Rameshat1276
 --------------------------------------------------------------------------------------
 
+Docker Slave Configuration:
+Run the below command to Install Docker
+
+sudo apt update
+sudo apt install docker.io
+
+Grant Jenkins user and Ubuntu user permission to docker deamon:
+sudo su - 
+usermod -aG docker jenkins
+usermod -aG docker ubuntu
+systemctl restart docker
+--------------------------------------------------------------------------------------------------
+
 
 
 
