@@ -164,6 +164,12 @@ aws iam   list-users
 # will outpur one by one command by enter
 ./awsresource.sh  |  more
 
+to install crontab: sudo yum install cronie -y
+which crontab
+
+
+
+
 
 
 
