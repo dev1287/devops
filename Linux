@@ -60,15 +60,154 @@ by default linux disable the password authnticatio for users to login we need to
 so always take backup
 cp /etc/ssh/sshd_config /tmp/sshd_config_backup
 vim /etc/ssh/sshd_config
+
+go to PasswordAuthentocation and change from No to yes.
 -------------------------------------
-sshd -t  : to check for syntax
+sshd -t  :it check for syntax
 
  sshd -t
 /etc/ssh/sshd_config line 6: no argument after keyword "sss"
 /etc/ssh/sshd_config: terminating, 1 bad configuration options
 
-
+we need to restart the service: systemctl restart sshd
 -------------------------------
+creating a group:
+when ever you create a user a group also created of same user name
+1)Pronary group -> devops
+2) secondary group -> testers  ( suppose he needs to some work for testers we add temporary to testers group)
+--------------------------------------------------------------------------
+aws error: failed check 1/2
+The instance 'i-04fa64e499de860fc' is not in a state from which it can be started.
+---------------------------------------------------------------------------------------
+Failed to connect to your instance
+EC2 Instance Connect is unable to connect to your instance. Ensure your instance network settings are configured correctly for EC2 Instance Connect. 
+For more information, see EC2 Instance Connect Prerequisites at https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-prerequisites.html.
+--------------------------------------------------------------------------------------------------------------------------
+id <username> : to check user groups
+
+groupadd devops -> to create a group
+
+usermod -g <groupname> <username>: to add user to group       small g to add to primary group, capital G is for adding secondary group     
+
+getent group : to see groups
+usermod -aG <groupname> <username> : (a is append, G is to add as secondary group)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+gpasswd -d <username> <groupname> :remove from group
+
+
+it is mandatory that user should be part of atleast one group
+if employee is leaving we nned to remove from group and delete the user.
+
+-----------------------------------------------
+usermod -g devops raghu
+root@ip-172-31-22-12:/home/ubuntu# id raghu
+uid=1001(raghu) gid=1002(devops) groups=1002(devops)
+root@ip-172-31-22-12:/home/ubuntu# usermod -aG testing  raghu
+root@ip-172-31-22-12:/home/ubuntu# id raghu
+uid=1001(raghu) gid=1002(devops) groups=1002(devops),1003(testing)
+root@ip-172-31-22-12:/home/ubuntu# gpasswd -d raghu testing
+Removing user raghu from group testing
+root@ip-172-31-22-12:/home/ubuntu# id raghu
+uid=1001(raghu) gid=1002(devops) groups=1002(devops)
+root@ip-172-31-22-12:/home/ubuntu# 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+giving access for ssh login to new user
+
+cd raghu
+raghu1@ip-172-31-22-12:~/raghu$ ssh-keygen -f raghu1
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in raghu1
+Your public key has been saved in raghu1.pub
+The key fingerprint is:
+The key's randomart image is:
++--[ED25519 256]--+
+|+=.++oo+*o.+oo   |
+|.o+.== o+.  o o  |
+|  ++==.+       = |
+|  .Bo.+ o     E +|
+|  ..oo..So   o =.|
+|       .o     . .|
+|                 |
+|                 |
+|                 |
++----[SHA256]-----+
+
+copy the pub key content and send raghu.pub to administrator
+
+from root login go to user home account folder
+root@ip-172-31-22-12:/home# cd raghu1
+root@ip-172-31-22-12:/home/raghu1# 
+
+create a directory  .ssh in side home folder of sivakumar
+root@ip-172-31-22-12:/home/raghu1# mkdir .ssh
+chmod 700 .ssh : to give access to that user only
+
+
+go to .ssh folder and create a file with name authorized_keys and paste the userpublic key inside it
+root@ip-172-31-22-12:/home/raghu1# cd .ssh
+root@ip-172-31-22-12:/home/raghu1/.ssh# vim authorized_keys
+
+give read persmissions to user 
+chmod 400 authorized_keys 
+
+change the ownership from root to user
+chown <user>:<group>
+chown raghu1:raghu1 -R .ssh    : R is for recursive for all files inside it
+
+ls - la : to see all files
+
+check user login from ssh: ssh -i raghu1.pem raghu1@35.91.54.165
+----------------------------------------------------------------
+root@ip-172-31-22-12:/home/raghu1# ls -la
+total 32
+drwxr-x--- 4 raghu1 raghu1 4096 Jul  9 18:37 .
+drwxr-xr-x 5 root   root   4096 Jul  9 17:50 ..
+-rw------- 1 raghu1 raghu1  119 Jul  9 18:19 .bash_history
+-rw-r--r-- 1 raghu1 raghu1  220 Jul  9 17:50 .bash_logout
+-rw-r--r-- 1 raghu1 raghu1 3771 Jul  9 17:50 .bashrc
+-rw-r--r-- 1 raghu1 raghu1  807 Jul  9 17:50 .profile
+drwxr-xr-x 2 root   root   4096 Jul  9 18:37 .ssh
+----------------------------------------------------------------
+
+
+---------------------------
+the new user has to generate ssh key and send the public key to admin
+--------------
+sudo mkdir /home/raghu
+sudo chown raghu:devops /home/raghu
+sudo chmod 755 /home/raghu
+sudo su - raghu
+--------------------------------------------------------------------------------------------
+
+to delete the user: we can't delete the user directly from primary group we have to assugn to self user group 
+
+root@ip-172-31-22-12:/home/raghu1/raghu# gpasswd -d raghu devops
+Removing user raghu from group devops
+
+see still devops is there:
+root@ip-172-31-22-12:/home/raghu1/raghu# id raghu
+uid=1001(raghu) gid=1002(devops) groups=1002(devops)
+
+adding to group:
+root@ip-172-31-22-12:/home/raghu1/raghu# usermod -g raghu raghu
+root@ip-172-31-22-12:/home/raghu1/raghu# id raghu
+uid=1001(raghu) gid=1001(raghu) groups=1001(raghu)
+
+delete the user:
+root@ip-172-31-22-12:/home/raghu1/raghu# userdel raghu
+root@ip-172-31-22-12:/home/raghu1/raghu# is raghu
+
+root@ip-172-31-22-12:/home/raghu1/raghu# id raghu
+id: ‘raghu’: no such user
+--------------------------------------------------------------------------------------------------------------------
+
+delete the group: we cant delete tyhe group if there are users
+
+groupdel <groupname>
+
 
 
 
