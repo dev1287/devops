@@ -6,6 +6,75 @@ Architecure Linux os:
 2) on top kernel we have system libraries  (they are responsible for performing a task example: libc is one of the system library)
 3) on top of system libraries, we have compilers,         we have soem user proccesses  , we have system software  (if we want java we need java compilers etc)
 
+tagh.txt
+raghu
+RAGHU
+grep <search term>  <filename>
+grep raghu  :output:raghu (linux is cases sessitive so output only raghu)
+grep -i raghu  :output:raghu (to remove sessitive so output is raghu, RAGHU)
+
+cut command is used to divide the string using delimitter
+
+cut -d / -f1  
+$ echo www.google.com | cut -d . -f1
+www
+$ echo www.google.com | cut -d . -f2
+google
+$ echo www.google.com | cut -d . -f3
+com
+
+------------------------------------------------------
+
+ubuntu@ip-172-31-29-20:~$ echo www/google/com | awk -F / '{print $1F}'
+www
+$ echo www/google/com | awk -F / '{print $2f}'
+google
+$ echo www/google/com | awk -F / '{print $3f}'
+com
+
+to get last element:
+$ echo www/google/com | awk -F / '{print $NF}'
+com
+----------------------------------------------------------------
+chmod ugo+rwx filename    (u=user,g=group,o=other r=read,w=write,x=execute)
+------------------------------------------------------
+useradd:
+useradd raghu  (no password)
+adduser raghu  (along with password)
+------------------------------------
+cat /etc/passwd   (to see all users in system)
+or
+getent passwd
+
+----------------------------------------
+to create password:
+passwd <username>
+------------------------------------------------
+
+by default linux disable the password authnticatio for users to login we need to enable it
+
+
+/etc/ssh/sshd_config : it is crucial file if we do mistakes we can loose access to server completely,as ssh information is there and ssh is central point to access servers.
+
+
+so always take backup
+cp /etc/ssh/sshd_config /tmp/sshd_config_backup
+vim /etc/ssh/sshd_config
+-------------------------------------
+sshd -t  : to check for syntax
+
+ sshd -t
+/etc/ssh/sshd_config line 6: no argument after keyword "sss"
+/etc/ssh/sshd_config: terminating, 1 bad configuration options
+
+
+-------------------------------
+
+
+
+
+
+
 
 
 
