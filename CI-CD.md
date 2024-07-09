@@ -62,7 +62,6 @@ ps -ef | grep jenkins
 
 to copy from go to this path: sudo cat  /var/lib/jenkins/secrets/initialAdminPassword
 
-<img src="#" alt="Screenshot 2023-02-01 at 5 46 14 PM" style="max-width: 100%;">
 ----------------------------------------------------------------------------------------------
 
 Install the Docker Pipeline plugin in Jenkins:
@@ -83,6 +82,7 @@ sudo apt update
 sudo apt install docker.io
 
 Grant Jenkins user and Ubuntu user permission to docker deamon:
+(note: without giving permissions for ubuntu and jenkins for docker the build will not happen)
 sudo su - 
 usermod -aG docker jenkins
 usermod -aG docker ubuntu
@@ -90,7 +90,9 @@ systemctl restart docker
 --------------------------------------------------------------------------------------------------
 
 
+<img src="https://github.com/dev1287/devops/blob/main/images/jenkins/1.png" alt="Screenshot 2023-02-01 at 5 46 14 PM" style="max-width: 100%;">
 
+after creating pipeline you can see docker images for sometime and which automatically deletes after sometime.
 
 
 
