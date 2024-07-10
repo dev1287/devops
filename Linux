@@ -171,7 +171,7 @@ drwxr-xr-x 5 root   root   4096 Jul  9 17:50 ..
 -rw-r--r-- 1 raghu1 raghu1  807 Jul  9 17:50 .profile
 drwxr-xr-x 2 root   root   4096 Jul  9 18:37 .ssh
 ----------------------------------------------------------------
-
+ls -la : hidden files
 
 ---------------------------
 the new user has to generate ssh key and send the public key to admin
@@ -207,6 +207,136 @@ id: ‘raghu’: no such user
 delete the group: we cant delete tyhe group if there are users
 
 groupdel <groupname>
+
+---------------------------------------------------------------------------------------------------------------------------
+process management:
+everything inside linux is process
+
+pid is its process id
+ppid is its parent process id
+
+for example the ps -ef is parent is bash
+UID          PID    PPID  C STIME TTY          TIME CMD
+root        3982    3981  0 20:39 pts/3    00:00:00 bash
+root        4690    3982  0 21:03 pts/3    00:00:00 ps -ef
+
+even to give simple command output it will create process
+
+they are 2 types foreground process  and background process
+
+example: sleep 10
+we cant do anything in foreground
+
+suppose same if we give : sleep 10 &
+it will run in background
+root        4786    3982  0 22:04 pts/3    00:00:00 sleep 10
+root        4787    3982  0 22:04 pts/3    00:00:00 ps -ef
+---------------------------------------------------------------------------------------------------------------------------
+sleep 10 & 
+ps -ef | grep sleep
+
+root@ip-172-31-22-12:/home/raghu1/raghu# ps -ef | grep sleep
+root        4794    3982  0 22:07 pts/3    00:00:00 sleep 10
+root        4796    3982  0 22:07 pts/3    00:00:00 grep --color=auto sleep
+
+
+kill <PID>     : we are requesting the process to stop, termiating
+kill -9 <pid> : we are forcing to kill
+
+
+-------------------------------------------------------------------------------------------------
+top
+-----------------------------------------------
+
+package management:
+ubuntu: apt-get
+redhat: yum
+
+
+yum list installed
+yum list available
+yum remove git -y
+
+----------------------------------------------------------------------------------------------------
+
+
+/etc/passwd :will have user ininfo
+
+
+----------------------------------------------------------------------------------------------
+Service Management:
+if we dont give proper port no the request will come to system and stop (like if we give address with out apt door no, it will come to apt and stop)
+
+ssh port no is 22
+http: 80
+https: 443
+mysql: 3006
+smtp:25
+
+we can change port no if required
+sudo yum install nginx -y  (ti install nginx)
+sudo systemctl start nginx   (it will start the service)
+sudo systemctl enable nginx  (after restart system , if we enable the service it will start automatically)
+sudo systemctl disable nginx  (if we disable the service it will not start automaticaly)
+systemctl status nginx (to know runnning statius on port 80)
+
+
+goto <ipaddtesspublic>:80  in browser
+Welcome to nginx!
+If you see this page, the nginx web server is successfully installed and working. Further configuration is required.
+
+For online documentation and support please refer to nginx.org.
+Commercial support is available at nginx.com.
+
+Thank you for using nginx.
+
+as http is running we get sucess on port 80
+if http is not running we get error (check by stopping nginx: sudo systemctl stop nginx)
+
+------------------------------------------------------------------------------------------------------------------------------
+Network statistics:(netstat)
+netstat -l : l for listing
+neststat -lntp 
+
+-l: Show only listening ports.
+-n: Show numerical addresses instead of resolving hosts.
+-t: Show TCP ports.
+-p: Show the process using the port.
+
+[ec2-user@ip-172-31-31-201 ~]$ sudo netstat -lntp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      2144/sshd: /usr/sbi 
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      25958/nginx: master 
+tcp6       0      0 :::22                   :::*                    LISTEN      2144/sshd: /usr/sbi 
+tcp6       0      0 :::80                   :::*                    LISTEN      25958/nginx: master               
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+Troubleshooting:
+system resources
+   CPU memory  -> top
+   HD full     -> df -hT
+   RAM full    -> free -m   (m to show in megabyts, g for gigabytes)
+process is running or not ---> ps -ef | grep nginx
+port opened or not --> netsstat -lntp
+systemctl status ‹service> 
+firewall is opened or not -->
+
+--------------------------------------------------------------------
+giving admin access:
+
+Linux Admin -> full access to linux DevOps Admin --> limited sudo access
+ramesh -> admin (add him to wheel group or give him admin access by adding below wheel group in sudoers file   %admin ALL=(ALL)    ALL)
+
+to give limited permissions to suresh for only yum and systemctl:
+-------------------------------------------------------------------
+vim /etc/sudoers.d/devops       (we can also give here the below as opening direct file is danger)
+vim /etc/sudoers.d/admin      (for admin we can create another file instead of touching the main file)
+
+i can simply delete the file by "rm -rf devops"
+
+suresh -> devops  (  %devops ALL=(ALL) /usr/bin/yum, /usr/bin/systemctl     ) add same below admin to find path of command give (which yum -->/usr/bin/yum, which systemctl->/usr/bin/systemctl )
+/etc/sudoers --> go to this and open visudo (it will open safely and check for syntax instead of vim)
 
 
 
