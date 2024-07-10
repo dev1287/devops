@@ -339,6 +339,76 @@ suresh -> devops  (  %devops ALL=(ALL) /usr/bin/yum, /usr/bin/systemctl     ) ad
 /etc/sudoers --> go to this and open visudo (it will open safely and check for syntax instead of vim)
 
 
+whereis git
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+install nginx and open port 80
+
+in the above path we can see the html file on nginx?
+cd /usr/share/nginx/html
+
+in cmd give below:
+echo "hi this raghav" >> hello.html
+
+now open in browser: now you see hi this is raghav
+http://34.209.47.173/hello.html
+--------------------------------------------------
+front-end servers = http servers = 80
+hosts html/js based applications
+-----------------------------------------------------------
+back-end servers = http = 8080
+tomcat, jboss, etc java, NET, Python
+
+both backend and frontend are connected by api
+-------------------------------------------------------------------------------------------------------------------
+
+linux folder structures:
+/ --> roor folder
+boot -→> when server is getting started, server refers this directory and config fr grub.cfg
+dev --> devices --> external devices are mounted here 
+etc -→> extra configuration   (all installed software like nginx information is stored here) when we install with yum or apt-get will store here
+home -> users home directory are created here 
+lib/lib64 --> system needs libraries  (like sustem32 in windows)
+/media --> cd/dvd
+/mnt --> extra disk amount here 
+/opt -->optional, manual installation of services or applications will be stored downloaded here
+/proc --> running process will store here with their process-id   ( cat /proc/meminfo,    cat proc/cpuinfo) <- where will all the cpu information contain in linux> ans: proc/cpuinfo
+/root --> root user home folder
+/run -> when server starts , server uses this directory as storage
+/bin --> all commands will ne installed here (cat , touch )
+/sbin --> system commands like root access commands
+/tmp --> temporary files
+/usr --> all users info
+/var --> variables all logfiles of server and appplication (like who are accessing nginx, system log files who are accessing)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+symlink(symbolic link is shortcut it will point to different inode, when  original file is deleted softlink will not work) vs hardlink (points to same inode):
+
+touch raghu
+[root@ip-172-31-25-86 ec2-user]# ls -li
+9823600 -rw-r--r--. 1 root     root          0 Jul 10 22:25 raghu
+
+9823600 is the inode where this raghu file is tored in memory
+
+to create softlinks;
+
+[root@ip-172-31-25-86 ec2-user]# ln -s raghu /tmp/hello-soft
+[root@ip-172-31-25-86 ec2-user]# cd /tmp
+[root@ip-172-31-25-86 tmp]# ls -l
+total 0
+lrwxrwxrwx. 1 root root  5 Jul 10 22:30 hello-soft -> raghu
+
+hardlink:
+ln /path/to/original/file /path/to/hard/link
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 
