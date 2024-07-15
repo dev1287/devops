@@ -21,4 +21,10 @@ SUM=$(($Number1+$Number2))
 echo "Total:: $SUM"
 
 echo "---------------------------------------"
+variable is nothing but storage its storing something
+
+
+
+
+
 
