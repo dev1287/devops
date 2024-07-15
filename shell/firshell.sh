@@ -10,4 +10,4 @@ PASSWORD=$2
 echo "please enter USERNAME::"
 read -s USERNAME
 echo "please enter PASSWORD::"
-read -s USERNAME
+read -s PASSWORD
