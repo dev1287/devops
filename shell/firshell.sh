@@ -11,3 +11,14 @@ echo "please enter USERNAME::"
 read -s USERNAME
 echo "please enter PASSWORD::"
 read -s PASSWORD
+
+
+echo "---------------------------------------"
+
+Number1=$3
+Number2=$4
+SUM=$(($Number1+$Number2))
+echo "Total:: $SUM"
+
+echo "---------------------------------------"
+
