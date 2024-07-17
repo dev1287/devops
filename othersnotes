@@ -6,9 +6,10 @@ echo "All args passed:: $@"
 
 echo "Script name:: $0"
 
+sde editor is streamline editor to edit at scripts, will run at background without opening the file, it will not save really its temp save
 
-
-
+command:>>>    sed -e '2 a here 2 is to go after secondline and a is to append after, and -e is temprary thisthisisisisisi' passwd
+               sed -i '2 i here 2 is to go after secondline and b is to append before , -i is for permanently thisthisisisisisi in file' passwd
 -----------------------------------------------------------------------------------
 
 WAF filters and protects web applications.
