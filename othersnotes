@@ -1,6 +1,10 @@
 sudo visudo -c  <filename>  ----> in /etc/sudoers  to check for syntax errors without editing.
 
+echo "How many args passed:: $#"
 
+echo "All args passed:: $@"
+
+echo "Script name:: $0"
 
 
 
